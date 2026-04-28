@@ -13,9 +13,8 @@ def init_firebase():
     if not firebase_admin._apps:
         try:
             # Primero intentamos leer desde los Secrets de Streamlit (Modo Nube)
-            if st.secrets:
-                # Si pegaste el JSON directamente en Secrets, lo cargamos así:
-                key_dict = dict(st.secrets)
+            if "firebase_key" in st.secrets:
+                key_dict = json.loads(st.secrets["firebase_key"])
                 cred = credentials.Certificate(key_dict)
             else:
                 # Modo local
